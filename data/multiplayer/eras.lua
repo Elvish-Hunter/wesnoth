@@ -12,9 +12,14 @@ res.quick_4mp_leaders = function(args)
 	end
 
 	local trait_quick = args[1][2]
+	local trait_emerald = args[2][2]
 	for i, unit in ipairs(wesnoth.units.find_on_map { canrecruit = true, T.filter_wml { max_moves = 4 } }) do
 		if not unit.variables.dont_make_me_quick then
-			unit:add_modification("trait", trait_quick )
+			if unit.__cfg.race == "elemental" then
+				unit:add_modification("trait", trait_emerald)
+			else
+				unit:add_modification("trait", trait_quick)
+			end
 			unit.moves = unit.max_moves
 			unit.hitpoints = unit.max_hitpoints
 		end
